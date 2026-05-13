@@ -1,0 +1,74 @@
+@import "../../.cache/wal/colors-waybar.css";
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+/* Прозрачный основной фон бара */
+window#waybar {
+    background: transparent;
+}
+
+/* Общий стиль для всех "капсул" */
+#workspaces,
+#cpu,
+#memory,
+#custom-gpu,
+#window,
+#clock,
+#language,
+#pulseaudio,
+#tray {
+    background: rgba(20, 20, 30, 0.8); /* Твоя прозрачность 0.8 */
+    color: #ffffff;
+    border-radius: 12px; /* Скругление для эффекта капсулы */
+    padding: 0 12px;
+    margin: 4px 2px;
+    transition: all 0.3s ease;
+}
+
+/* Воркспейсы внутри капсулы */
+#workspaces {
+    padding: 0 5px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: rgba(255, 255, 255, 0.4);
+    background: transparent;
+}
+
+#workspaces button.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+}
+
+#workspaces button.occupied {
+    color: #ffffff;
+}
+
+/* Название окна (капсула слева) */
+#window {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Часы (центр) */
+#clock {
+    font-weight: bold;
+}
+
+/* Трей (правая капсула) */
+#tray {
+    margin-right: 5px;
+}
+
+/* Эффект при наведении на модули (опционально) */
+#cpu:hover, #memory:hover, #custom-gpu:hover, #pulseaudio:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
