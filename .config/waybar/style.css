@@ -1,3 +1,81 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+/* Настраиваем саму панель как единую полосу */
+window#waybar {
+    /* background: transparent; */ /* Оригинальная строка */
+    background: rgba(26, 26, 26, 0.70); /* Твой цвет, но прозрачнее для блюра */
+    border-radius: 16px; /* Красивое глубокое скругление всей панели */
+    margin: 8px 12px; /* Отступы от краев экрана, чтобы панель "парила" */
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Тонкая стеклянная грань */
+}
+
+
+/* Убираем фон и скругления с бывших капсул, чтобы они стали единым целым с панелью */
+#workspaces,
+#cpu,
+#memory,
+#custom-gpu,
+#window,
+#clock,
+#language,
+#pulseaudio,
+#tray {
+    /* background: rgba(20, 20, 30, 0.8); */ /* Отключаем старый фон капсул */
+    /* border-radius: 12px; */ /* Отключаем старое скругление капсул */
+    color: #ffffff;
+    padding: 0 12px;
+    margin: 4px 2px;
+    transition: all 0.3s ease;
+}
+
+/* Воркспейсы */
+#workspaces {
+    padding: 0 5px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: rgba(255, 255, 255, 0.4);
+    background: transparent;
+}
+
+#workspaces button.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+}
+
+#workspaces button.occupied {
+    color: #ffffff;
+}
+
+/* Название окна */
+#window {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Часы */
+#clock {
+    font-weight: bold;
+}
+
+/* Трей */
+#tray {
+    margin-right: 5px;
+}
+
+/* Эффект при наведении */
+#cpu:hover, #memory:hover, #custom-gpu:hover, #pulseaudio:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+}
 @import "../../.cache/wal/colors-waybar.css";
 
 * {
