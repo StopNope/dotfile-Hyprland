@@ -1,152 +1,196 @@
+/* Базовые настройки для всех элементов панели */
 * {
     border: none;
     border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", sans-serif;
+    font-family: "JetBrainsMono Nerd Font";
     font-size: 13px;
     min-height: 0;
 }
 
-/* Настраиваем саму панель как единую полосу */
+/* Сама основная панель Waybar: делаем ее полностью прозрачной, чтобы она не была сплошной полосой */
 window#waybar {
-    /* background: transparent; */ /* Оригинальная строка */
-    background: rgba(26, 26, 26, 0.70); /* Твой цвет, но прозрачнее для блюра */
-    border-radius: 16px; /* Красивое глубокое скругление всей панели */
-    margin: 8px 12px; /* Отступы от краев экрана, чтобы панель "парила" */
-    border: 1px solid rgba(255, 255, 255, 0.08); /* Тонкая стеклянная грань */
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
-
-/* Убираем фон и скругления с бывших капсул, чтобы они стали единым целым с панелью */
+/* =============================================================================
+   ОСНОВНОЙ СТИЛЬ ПУЗЫРЬКОВ (ОСТРОВКОВ)
+   Здесь регулируются фон, рамка, тень и СКРУГЛЕНИЕ для всех островков разом
+   ============================================================================= */
 #workspaces,
+#group-hardware,
+#hardware,
+#window,
+#clock,
+#group-system,
+#system {
+    /* Темный матовый фон пузырька */
+    background: rgba(22, 22, 26, 0.92);
+    /* Тонкая грань стекла */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Мягкая тень под пузырьком */
+    /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);*/
+
+    /* РЕГУЛИРОВКА СКРУГЛЕНИЯ ПУЗЫРЬКОВ: меняй значение здесь (например, 8px, 12px, 16px, 20px) */
+    border-radius: 12px;
+
+    /* Внутренние поля внутри пузырька */
+    padding: 2px 8px;
+    /* Внешние отступы, чтобы пузырьки не слипались по вертикали */
+    margin: 2px 0;
+    color: #e0e0e0;
+}
+
+/* Если окно не открыто — скрывать пустой пузырек активного окна */
+/*#window:empty {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+*/
+/* Стилизация отдельных элементов внутри составных пузырьков */
 #cpu,
 #memory,
 #custom-gpu,
-#window,
-#clock,
+#network,
+#bluetooth,
 #language,
 #pulseaudio,
 #tray {
-    /* background: rgba(20, 20, 30, 0.8); */ /* Отключаем старый фон капсул */
-    /* border-radius: 12px; */ /* Отключаем старое скругление капсул */
-    color: #ffffff;
-    padding: 0 12px;
-    margin: 4px 2px;
-    transition: all 0.3s ease;
-}
-
-/* Воркспейсы */
-#workspaces {
-    padding: 0 5px;
-}
-
-#workspaces button {
+    /* Основной цвет текста и иконок */
+    color: #e0e0e0;
+    /* Горизонтальные внутренние отступы внутри каждого модуля */
     padding: 0 8px;
-    color: rgba(255, 255, 255, 0.4);
+    /* Убираем лишние внешние отступы модулей внутри капсулы */
+    margin: 0;
+    /* Сбрасываем собственный фон, чтобы он брался от общего пузырька */
     background: transparent;
-}
-
-#workspaces button.active {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
     border-radius: 8px;
+    /* Плавный переход цвета и фона при наведении */
+    transition: all 0.25s ease-in-out;
 }
 
-#workspaces button.occupied {
+/* Контейнер рабочих столов */
+#workspaces {
+    /* Уменьшенные отступы блока столов */
+    padding: 2px 4px;
+}
+
+/* Отдельные кнопки рабочих столов */
+#workspaces button {
+    /* Внутренние поля кнопки */
+    padding: 0 7px;
+    /* Приглушенный цвет неактивных столов */
+    color: rgba(255, 255, 255, 0.35);
+    /* Прозрачный фон по умолчанию */
+    background: transparent;
+    /* Скругление для фонового индикатора */
+    border-radius: 6px;
+    /* Плавная смена состояний кнопки */
+    transition: all 0.2s ease;
+}
+
+/* Активный рабочий стол, на котором находится фокус */
+#workspaces button.active {
+    /* Яркий белый цвет активной цифры/иконки */
     color: #ffffff;
+    /* Полупрозрачная плашка под активным столом */
+    background: rgba(255, 255, 255, 0.12);
+    /* Скругление активной плашки */
+    border-radius: 6px;
 }
 
-/* Название окна */
+/* Рабочие столы, на которых запущены программы */
+#workspaces button.occupied {
+    /* Более контрастный цвет столов с открытыми окнами */
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Заголовок и класс активного окна */
 #window {
-    font-weight: bold;
-    margin-left: 5px;
+    /* Полужирное начертание заголовка окна */
+    font-weight: 600;
+    /* Слегка приглушенный оттенок, чтобы не перебивать фокус */
+    color: #cfcfcf;
+    padding: 2px 12px;
 }
 
-/* Часы */
+/* Часы по центру */
 #clock {
-    font-weight: bold;
+    /* Жирный читаемый шрифт */
+    font-weight: 700;
+    /* Слегка увеличенный размер текста для акцента */
+    font-size: 13.5px;
+    /* Чистый белый цвет цифр */
+    color: #ffffff;
+    /* Моноширинные цифры, чтобы секунды не двигали соседние модули */
+    font-feature-settings: "tnum";
+    /* Внутренние отступы вокруг часов */
+    padding: 2px 14px;
 }
 
-/* Трей */
+/* Стилизация модуля сети */
+#network {
+    /* Акцентный голубоватый оттенок для иконки и статуса сети */
+    color: #7aa2f7;
+}
+
+/* Сеть в состоянии "Отключено" */
+#network.disconnected {
+    /* Приглушенный красноватый цвет при отсутствии соединения */
+    color: #f7768e;
+}
+
+/* Стилизация модуля Bluetooth */
+#bluetooth {
+    /* Сине-фиолетовый акцентный цвет активного блютуза */
+    color: #7dcfff;
+}
+
+/* Блютуз в выключенном состоянии */
+#bluetooth.disabled,
+#bluetooth.off {
+    /* Серый приглушенный цвет, когда контроллер отключен */
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Системный трей */
 #tray {
-    margin-right: 5px;
+    /* Небольшой внутренний отступ для трея */
+    padding: 0 4px;
 }
 
-/* Эффект при наведении */
-#cpu:hover, #memory:hover, #custom-gpu:hover, #pulseaudio:hover {
+/* Эффект подсветки модулей при наведении курсора внутри пузырьков */
+#cpu:hover, 
+#memory:hover, 
+#custom-gpu:hover, 
+#network:hover,
+#bluetooth:hover,
+#language:hover,
+#pulseaudio:hover {
+    /* Мягкая светлая плашка при наведении */
     background: rgba(255, 255, 255, 0.08);
+    /* Аккуратное скругление капсулы подсветки */
     border-radius: 8px;
-}
-@import "../../.cache/wal/colors-waybar.css";
-
-* {
-    border: none;
-    border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", sans-serif;
-    font-size: 13px;
-    min-height: 0;
-}
-
-/* Прозрачный основной фон бара */
-window#waybar {
-    background: transparent;
-}
-
-/* Общий стиль для всех "капсул" */
-#workspaces,
-#cpu,
-#memory,
-#custom-gpu,
-#window,
-#clock,
-#language,
-#pulseaudio,
-#tray {
-    background: rgba(20, 20, 30, 0.8); /* Твоя прозрачность 0.8 */
-    color: #ffffff;
-    border-radius: 12px; /* Скругление для эффекта капсулы */
-    padding: 0 12px;
-    margin: 4px 2px;
-    transition: all 0.3s ease;
-}
-
-/* Воркспейсы внутри капсулы */
-#workspaces {
-    padding: 0 5px;
-}
-
-#workspaces button {
-    padding: 0 8px;
-    color: rgba(255, 255, 255, 0.4);
-    background: transparent;
-}
-
-#workspaces button.active {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-}
-
-#workspaces button.occupied {
+    /* Более яркий цвет текста при ховере */
     color: #ffffff;
 }
 
-/* Название окна (капсула слева) */
-#window {
-    font-weight: bold;
-    margin-left: 5px;
+/* Всплывающие окна подсказок (Tooltips / Календарь) */
+tooltip {
+    /* Темный полупрозрачный фон тултипа */
+    background: rgba(20, 20, 24, 0.95);
+    /* Скругление краев всплывающего окна */
+    border-radius: 10px;
+    /* Тонкая рамка вокруг подсказки */
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Часы (центр) */
-#clock {
-    font-weight: bold;
-}
-
-/* Трей (правая капсула) */
-#tray {
-    margin-right: 5px;
-}
-
-/* Эффект при наведении на модули (опционально) */
-#cpu:hover, #memory:hover, #custom-gpu:hover, #pulseaudio:hover {
-    background: rgba(255, 255, 255, 0.1);
+tooltip label {
+    /* Внутренние поля текста тултипа */
+    padding: 6px;
+    /* Цвет текста внутри тултипа */
+    color: #e0e0e0;
 }
